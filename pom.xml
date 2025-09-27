@@ -14,8 +14,8 @@
     <name>Ratepay Live Coding Challenge</name>
     <description>Ratepay Live Coding Challenge</description>
     <properties>
-        <java.version>17</java.version>
-        <org.projectlombok.version>1.18.26</org.projectlombok.version>
+        <java.version>21</java.version>
+        <org.projectlombok.version>1.18.36</org.projectlombok.version>
         <org.assertj.version>3.24.2</org.assertj.version>
         <hibernate.types.version>3.3.2</hibernate.types.version>
     </properties>
@@ -42,7 +42,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${org.projectlombok.version}</version>
-            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,16 +60,20 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <fork>true</fork>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${org.projectlombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
