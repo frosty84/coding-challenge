@@ -17,12 +17,12 @@ public class Order {
 
     private OffsetDateTime created;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Product> products;
 
     private BigDecimal totalAmount;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "buyer_id", referencedColumnName="id", nullable = false)
     private Buyer buyer;
 
