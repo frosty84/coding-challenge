@@ -17,7 +17,7 @@ public class OrderService {
     }
 
     public List<OrderDto> getOrders() {
-        var orders = orderRepository.findAll();
+        var orders = orderRepository.findAllWithBuyer();
         return orders.stream().map(order -> {
             var dto = new OrderDto();
             dto.setBuyerId(order.getBuyer().getId().toString());

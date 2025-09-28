@@ -3,6 +3,7 @@ package com.ratepay.challenge.repository;
 import com.ratepay.challenge.entity.Buyer;
 import com.ratepay.challenge.entity.Order;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -17,7 +18,7 @@ public class OrderRepositoryTest {
     private OrderRepository orderRepository;
 
     @DisplayName("findAll returns all orders when repository is not empty")
-    @org.junit.jupiter.api.Test
+    @Test
     void findAllReturnsAllOrdersWhenRepositoryIsNotEmpty() {
         var buyer1 = new Buyer();
         buyer1.setId(UUID.randomUUID());
@@ -37,7 +38,7 @@ public class OrderRepositoryTest {
         orderRepository.save(order1);
         orderRepository.save(order2);
 
-        List<Order> orders = orderRepository.findAll();
+        List<Order> orders = orderRepository.findAllWithBuyer();
 
         assertThat(orders).hasSize(2).contains(order1, order2);
     }
