@@ -2,15 +2,15 @@ package com.ratepay.challenge.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ratepay.challenge.dto.ProductDto;
-import com.ratepay.challenge.entity.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -40,5 +40,30 @@ public class ProductControllerTest {
                 .andExpect(content().contentType("application/json"))
                 .andExpect(jsonPath("$.length()").value(7))
                 .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    void shouldReturnAllProductsSortedByTitle() throws Exception {
+        var expectedProducts = new ProductDto[]{
+                new ProductDto("Shoes", "120.00"),
+                new ProductDto("Ball", "29.00"),
+                new ProductDto("Book", "1.20"),
+                new ProductDto("Cup", "3.50"),
+                new ProductDto("Desk", "499.00"),
+                new ProductDto("Guitar", "250.00"),
+                new ProductDto("Shelf", "70.00"),
+
+        };
+
+        List<ProductDto> expectedList = Arrays.asList(expectedProducts);
+        expectedList.sort(Comparator.comparing(ProductDto::getTitle));
+
+        var expectedJson = new ObjectMapper().writeValueAsString(expectedList);
+
+        mockMvc.perform(get("/api/products").param("sortBy", "title"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.length()").value(7))
+                .andExpect(content().json(expectedJson, true));
     }
 }

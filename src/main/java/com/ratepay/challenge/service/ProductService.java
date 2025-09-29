@@ -2,6 +2,7 @@ package com.ratepay.challenge.service;
 
 import com.ratepay.challenge.dto.ProductDto;
 import com.ratepay.challenge.repository.ProductRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<ProductDto> findAll() {
-        return productRepository.findAll().stream().map(product -> new ProductDto(product.getTitle(), product.getPrice().toString())).toList();
+    public List<ProductDto> findAll(String sortBy) {
+        Sort sort = Sort.by(sortBy).ascending();
+        return productRepository.findAll(sort).stream().map(product -> new ProductDto(product.getTitle(), product.getPrice().toString())).toList();
     }
 }

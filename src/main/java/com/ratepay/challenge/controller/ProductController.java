@@ -4,6 +4,7 @@ import com.ratepay.challenge.dto.ProductDto;
 import com.ratepay.challenge.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,7 +20,10 @@ public class ProductController {
 
     @RequestMapping("/api/products")
     @GetMapping
-    public List<ProductDto> getProducts() {
-        return productService.findAll();
+    public List<ProductDto> getProducts(
+            @RequestParam (defaultValue = "price") String sortBy
+    ) {
+        var products = productService.findAll(sortBy);
+        return products;
     }
 }
