@@ -47,12 +47,7 @@ public class OrderService {
         dto.setBuyerId(order.getBuyer().getId().toString());
         dto.setId(order.getId());
 
-        var productDtos = order.getProducts().stream().map(product -> {
-            var productDto = new ProductDto();
-            productDto.setPrice(product.getPrice().toString());
-            productDto.setTitle(product.getTitle());
-            return productDto;
-        }).toList();
+        var productDtos = order.getProducts().stream().map(product -> new ProductDto(product.getTitle(), product.getPrice().toString())).toList();
         dto.setProducts(productDtos);
         return dto;
     }

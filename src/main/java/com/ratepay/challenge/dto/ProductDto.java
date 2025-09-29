@@ -10,4 +10,8 @@ public class ProductDto {
     private String title;
     private String price;
 
+    public ProductDto(String title, String price) {
+        this.title = title;
+        this.price = price;
+    }
 }
