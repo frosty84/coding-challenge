@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,8 +40,9 @@ public class OrderRepositoryTest {
         orderRepository.save(order1);
         orderRepository.save(order2);
 
-        List<Order> orders = orderRepository.findAllWithBuyer();
+        PageRequest pageable = PageRequest.of(0, 100);
+        Page<UUID> orders = orderRepository.findOrderIds(pageable);
 
-        assertThat(orders).hasSize(2).contains(order1, order2);
+        assertThat(orders).hasSize(2).contains(order1.getId(), order2.getId());
     }
 }
