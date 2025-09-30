@@ -1,6 +1,8 @@
 package com.ratepay.challenge.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -9,10 +11,16 @@ import java.util.UUID;
 @Entity(name = "product")
 public class Product {
 
+    @Setter
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    @Setter
+    @Getter
     private String title;
+    @Setter
+    @Getter
     private BigDecimal price;
     @ManyToOne
     @JoinColumn(name = "orders_id", referencedColumnName = "id", nullable = false)
@@ -31,29 +39,6 @@ public class Product {
 
     public void setOrder(Order order) {
         this.orders = order;
-    }
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     @Override
